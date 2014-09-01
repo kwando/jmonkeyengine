@@ -182,7 +182,27 @@ public class DefineList implements Savable, Cloneable {
         return defines.equals(other.defines);
     }
     
-    public boolean equalsParams(ListMap params, TechniqueDef def) {
+    /*
+    * Update defines with new values.
+    * @return true if defines was updated.
+    */
+    public boolean updateDefines(ListMap params, TechniqueDef def){
+        if(equalsParams(params, def)){
+            return false;
+        }
+        clear();
+        for(int i=0;i<params.size();i++) {
+            MatParam param = (MatParam)params.getValue(i);
+            String defineName = def.getShaderParamDefine(param.getName());
+            if (defineName != null) {
+                set(defineName, param.getVarType(), param.getValue());
+            }
+        }
+        return true;
+    }
+    
+    
+    private boolean equalsParams(ListMap params, TechniqueDef def) {
         
         int size = 0;
 
