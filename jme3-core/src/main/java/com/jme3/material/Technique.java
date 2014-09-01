@@ -165,8 +165,8 @@ public class Technique /* implements Savable */ {
     public boolean isNeedReload() {
         return needReload;
     }
-
-    /**
+ 
+   /**
      * Prepares the technique for use by loading the shader and setting
      * the proper defines based on material parameters.
      * 
@@ -204,17 +204,12 @@ public class Technique /* implements Savable */ {
     }
 
     private void loadShader(AssetManager manager,EnumSet<Caps> rendererCaps) {
+        ShaderKey key = def.getShaderKey(this);
         
-        ShaderKey key = new ShaderKey(def.getVertexShaderName(),
-                    def.getFragmentShaderName(),
-                    getAllDefines(),
-                    def.getVertexShaderLanguage(),
-                    def.getFragmentShaderLanguage());
-        
-        if (getDef().isUsingShaderNodes()) {                 
+        if (key.isUsesShaderNodes()) {                 
            manager.getShaderGenerator(rendererCaps).initialize(this);           
-           key.setUsesShaderNodes(true);
-        }   
+        }
+        
         shader = manager.loadShader(key);
 
         // register the world bound uniforms

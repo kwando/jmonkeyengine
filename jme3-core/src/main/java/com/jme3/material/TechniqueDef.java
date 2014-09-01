@@ -35,6 +35,7 @@ import com.jme3.export.*;
 import com.jme3.renderer.Caps;
 import com.jme3.renderer.Renderer;
 import com.jme3.shader.DefineList;
+import com.jme3.shader.ShaderKey;
 import com.jme3.shader.ShaderNode;
 import com.jme3.shader.UniformBinding;
 import com.jme3.shader.VarType;
@@ -480,4 +481,20 @@ public class TechniqueDef implements Savable {
     public String toString() {
         return "TechniqueDef{" + "requiredCaps=" + requiredCaps + ", name=" + name + ", vertName=" + vertName + ", fragName=" + fragName + ", vertLanguage=" + vertLanguage + ", fragLanguage=" + fragLanguage + ", presetDefines=" + presetDefines + ", usesShaders=" + usesShaders + ", usesNodes=" + usesNodes + ", shaderNodes=" + shaderNodes + ", shaderGenerationInfo=" + shaderGenerationInfo + ", renderState=" + renderState + ", forcedRenderState=" + forcedRenderState + ", lightMode=" + lightMode + ", shadowMode=" + shadowMode + ", defineParams=" + defineParams + ", worldBinds=" + worldBinds + '}';
     }    
+    
+    /*
+    * Constructs a shader key for the given technique.
+    * @param Technique tech
+    * @return ShaderKey shaderKey
+    */
+    ShaderKey getShaderKey(Technique tech){
+        ShaderKey key = new ShaderKey(getVertexShaderName(),
+                    getFragmentShaderName(),
+                    tech.getAllDefines(),
+                    getVertexShaderLanguage(),
+                    getFragmentShaderLanguage());
+        
+        key.setUsesShaderNodes(usesNodes);
+        return key;
+    }
 }
