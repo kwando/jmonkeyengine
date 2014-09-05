@@ -78,10 +78,7 @@ public class DirectionalLight extends Light {
      * @param dir the direction of the light.
      */
     public void setDirection(Vector3f dir){
-        direction.set(dir);
-        if (!direction.isUnitVector()) {
-            direction.normalizeLocal();
-        }
+        direction.set(dir).normalizeLocal();
     }
 
     @Override
